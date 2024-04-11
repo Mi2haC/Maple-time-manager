@@ -1,20 +1,19 @@
 import styled from "styled-components";
-import studentsImg from "../assets/students.jpg";
+import kalosImg from "../assets/kalos-soul.webp";
+import Button from "../components/UI/Button";
 
 export default function HomePage() {
   return (
     <Container>
-      <Title>Our Mission: Your Success</Title>
+      <Title>Update history</Title>
       <Wrapper>
-        <Icon src={studentsImg} alt="A group of students" />
+        <Icon src={kalosImg} alt="Kalos soul" />
         <Inner>
-          <InnerTitle>What we do</InnerTitle>
+          <InnerTitle>24/04/10: Kalos</InnerTitle>
           <Description>
-            ReactMentoring is a platform for React developers to find mentors
-            who can help them with their React-related questions and problems.
-            We are a community of React developers who want to help each other
-            succeed.
+            Manage: laser, arrows, breath, gimic, yorozu
           </Description>
+          <Button to={"kalos"}>Jump</Button>
         </Inner>
       </Wrapper>
     </Container>
@@ -23,9 +22,10 @@ export default function HomePage() {
 
 const Container = styled.main`
   width: 80%;
+  min-width: 40rem;
   max-width: 60rem;
   margin: 3rem auto;
-  border-radius: 8px;
+  /* border-radius: 8px; */
   color: white;
 `;
 
@@ -39,16 +39,21 @@ const Wrapper = styled.section`
   display: flex;
   gap: 2rem;
   margin: 3rem 0;
+  /* border-color: white;
+  border-style: solid;
+  border-radius: 1rem; */
 `;
 
 const Icon = styled.img`
   width: 10rem;
   height: 10rem;
   object-fit: contain;
-  border-radius: 50%;
+  margin: auto 0;
 `;
 
-const Inner = styled.div``;
+const Inner = styled.div`
+  margin: 1rem;
+`;
 
 const InnerTitle = styled.h3`
   margin: 0;

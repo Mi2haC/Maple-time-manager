@@ -1,12 +1,13 @@
 import { NavLink } from "react-router-dom";
-import Button from "../UI/Button";
 import styled from "styled-components";
+import mapleIcon from "../../assets/mapleIcon.jpg";
 
 export default function MainHeader() {
   return (
     <>
       <Header>
-        <h1>ReactMentoring</h1>
+        <img src={mapleIcon} alt="Maplestory icon" />
+        <h1>Maplestory time</h1>
         <nav>
           <ul>
             <li>
@@ -26,9 +27,6 @@ export default function MainHeader() {
                 Kalos
               </NavLink>
             </li>
-            <li>
-              <Button>Sample</Button>
-            </li>
           </ul>
         </nav>
       </Header>
@@ -41,12 +39,20 @@ const Header = styled.header`
   max-width: 80rem;
   margin: 2rem auto;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
+  img {
+    width: 3rem;
+    height: 3rem;
+    object-fit: contain;
+    border-radius: 50%;
+  }
   h1 {
     margin: 0;
     font-size: 1.5rem;
     color: #cebfe7;
+    margin-left: 2rem;
+    margin-right: auto;
   }
   nav ul {
     display: flex;
