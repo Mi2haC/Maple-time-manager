@@ -21,7 +21,7 @@ export default function Button(props: ButtonProps | ButtonLinkProps) {
   if (isRouterLink(props)) {
     const { children, textOnly, ...otherProps } = props;
     return (
-      <StyledLink textOnly={textOnly} {...otherProps}>
+      <StyledLink $textOnly={textOnly} {...otherProps}>
         {children}
       </StyledLink>
     );
@@ -29,7 +29,7 @@ export default function Button(props: ButtonProps | ButtonLinkProps) {
   const { children, textOnly, ...otherProps } = props;
 
   return (
-    <StyledButton textOnly={textOnly} {...otherProps}>
+    <StyledButton $textOnly={textOnly} {...otherProps}>
       {children}
     </StyledButton>
   );
@@ -44,7 +44,7 @@ const textOnlyStyle = `
   }
 `;
 
-const StyledButton = styled.button<{ textOnly?: boolean }>`
+const StyledButton = styled.button<{ $textOnly?: boolean }>`
   background-color: #b68ef7;
   color: #0a0218;
   border: none;
@@ -57,15 +57,15 @@ const StyledButton = styled.button<{ textOnly?: boolean }>`
   :active {
     background-color: #a16cf7;
   }
-  ${(props) => (props?.textOnly ? `${textOnlyStyle}` : "")};
+  ${(props) => (props?.$textOnly ? `${textOnlyStyle}` : "")};
 `;
 
-const StyledLink = styled(Link)<{ textOnly?: boolean }>`
+const StyledLink = styled(Link)<{ $textOnly?: boolean }>`
   background-color: #b68ef7;
   color: #0a0218;
   border: none;
   border-radius: 4px;
-  padding: 0.25rem 0.75rem;
+  padding: 0.3rem 0.9rem;
   cursor: pointer;
   text-decoration: none;
   font: inherit;
@@ -73,5 +73,5 @@ const StyledLink = styled(Link)<{ textOnly?: boolean }>`
   :active {
     background-color: #a16cf7;
   }
-  ${(props) => (props?.textOnly ? `${textOnlyStyle}` : "")};
+  ${(props) => (props?.$textOnly ? `${textOnlyStyle}` : "")};
 `;

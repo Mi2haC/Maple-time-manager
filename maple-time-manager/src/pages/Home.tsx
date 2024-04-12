@@ -10,9 +10,7 @@ export default function HomePage() {
         <Icon src={kalosImg} alt="Kalos soul" />
         <Inner>
           <InnerTitle>24/04/10: Kalos</InnerTitle>
-          <Description>
-            Manage: laser, arrows, breath, gimic, yorozu
-          </Description>
+          <Description>Manage: laser, arrows, breath, gimic</Description>
           <Button to={"kalos"}>Jump</Button>
         </Inner>
       </Wrapper>
@@ -24,14 +22,14 @@ const Container = styled.main`
   width: 80%;
   min-width: 40rem;
   max-width: 60rem;
-  margin: 3rem auto;
+  margin: 2rem auto;
   /* border-radius: 8px; */
   color: white;
 `;
 
 const Title = styled.h2`
   margin: 0;
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: #e1d8f0;
 `;
 
