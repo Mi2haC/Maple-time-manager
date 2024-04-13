@@ -23,7 +23,6 @@ const Container = styled.main`
   min-width: 40rem;
   max-width: 60rem;
   margin: 2rem auto;
-  /* border-radius: 8px; */
   color: white;
 `;
 
@@ -37,9 +36,6 @@ const Wrapper = styled.section`
   display: flex;
   gap: 2rem;
   margin: 3rem 0;
-  /* border-color: white;
-  border-style: solid;
-  border-radius: 1rem; */
 `;
 
 const Icon = styled.img`

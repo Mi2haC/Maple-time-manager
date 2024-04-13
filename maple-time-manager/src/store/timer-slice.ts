@@ -1,25 +1,17 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { defaultTimers } from "../data/default-timers";
 
 export type Timer = {
   name: string;
   duration: number;
+  isRunning: boolean;
 };
 
 type TimersState = {
-  isRunning: boolean;
   timers: Timer[];
 };
 
-const defaultTimers: Timer[] = [
-  { name: "laser", duration: 15 },
-  { name: "arrows", duration: 15 },
-  { name: "breath", duration: 30 },
-  { name: "gimic", duration: 60 },
-  { name: "yorozu", duration: 90 },
-];
-
 const initialState: TimersState = {
-  isRunning: false,
   timers: defaultTimers,
 };
 
@@ -27,16 +19,19 @@ export const timerSlice = createSlice({
   name: "timer",
   initialState,
   reducers: {
-    startTimers(state) {
-      state.isRunning = true;
+    startTimer(state, action: PayloadAction<string>) {
+      const index = state.timers.findIndex(
+        (timer) => timer.name === action.payload
+      );
+      if (index !== -1) state.timers[index].isRunning = true;
     },
-    stopTimers(state) {
-      state.isRunning = false;
-    },
-    addTimer(state, action: PayloadAction<Timer>) {
-      state.timers.push(action.payload);
+    stopTimer(state, action: PayloadAction<string>) {
+      const index = state.timers.findIndex(
+        (timer) => timer.name === action.payload
+      );
+      if (index !== -1) state.timers[index].isRunning = false;
     },
   },
 });
 
-export const { startTimers, stopTimers, addTimer } = timerSlice.actions;
+export const { startTimer, stopTimer } = timerSlice.actions;

@@ -1,18 +1,22 @@
 import styled from "styled-components";
-import { type Timer as TimerProps } from "../../store/timer-slice";
+import {
+  startTimer,
+  stopTimer,
+  type Timer as TimerProps,
+} from "../../store/timer-slice";
 import { useEffect, useRef, useState } from "react";
-import { useAppSelector } from "../../store/hooks";
 import { BiCaretLeft, BiCaretRight } from "react-icons/bi";
 import Button from "../UI/Button";
+import { useAppDispatch } from "../../store/hooks";
 
-export default function Timer({ name, duration }: TimerProps) {
+export default function Timer({ name, duration, isRunning }: TimerProps) {
   const [remainingTime, setRemainingTime] = useState(duration * 1000);
   const interval = useRef<number | null>(null);
-  const { isRunning } = useAppSelector((state) => state.timer);
+  const dispatch = useAppDispatch();
 
-  if (remainingTime <= 0 && interval.current) {
-    clearInterval(interval.current);
-  }
+  // if (remainingTime <= 0 && interval.current) {
+  //   clearInterval(interval.current);
+  // }
 
   useEffect(() => {
     let timer: number;
@@ -20,7 +24,7 @@ export default function Timer({ name, duration }: TimerProps) {
       timer = setInterval(function () {
         setRemainingTime((prevTime) => {
           if (prevTime <= 0) {
-            return prevTime;
+            return duration * 1000;
           }
           return prevTime - 50;
         });
@@ -33,42 +37,69 @@ export default function Timer({ name, duration }: TimerProps) {
     return () => {
       clearInterval(timer);
     };
-  }, [isRunning]);
+  }, [isRunning, duration]);
 
   const formattedRemainingTime = (remainingTime / 1000).toFixed(2);
 
   function handleReduceTime() {
-    setRemainingTime((prevTime) => prevTime - 1000);
+    setRemainingTime((prevTime) => Math.max(prevTime - 1000, 0));
   }
 
   function handleAddTime() {
-    setRemainingTime((prevTime) => prevTime + 1000);
+    setRemainingTime((prevTime) => Math.min(prevTime + 1000, duration * 1000));
+  }
+
+  function handleResetStopTime() {
+    dispatch(stopTimer(name));
+    setRemainingTime(duration * 1000);
+  }
+
+  function handleStartTime() {
+    dispatch(startTimer(name));
   }
 
   return (
     <Wrapper>
-      <Title>{name}</Title>
+      <TitleButton
+        textOnly
+        onClick={isRunning ? handleResetStopTime : handleStartTime}
+      >
+        {name}
+      </TitleButton>
       <Counter>
         <StyledProgress max={duration * 1000} value={remainingTime} />
       </Counter>
       <Counter>
         <IconButton onClick={handleReduceTime}>
-          <BiCaretLeft />
+          <BiCaretLeft size={"2rem"} />
         </IconButton>
         {formattedRemainingTime}
         <IconButton onClick={handleAddTime}>
-          <BiCaretRight />
+          <BiCaretRight size={"2rem"} />
         </IconButton>
       </Counter>
     </Wrapper>
   );
 }
 
+const TitleButton = styled(Button)`
+  width: 100%;
+  font-size: 2rem;
+  text-align: center;
+  margin: 0;
+  color: #e1d8f0;
+  &:hover,
+  :active {
+    background-color: #9b9b8e;
+    color: #e1d8f0;
+  }
+`;
+
 const IconButton = styled(Button)`
   background-color: transparent;
   color: #e1d8f0;
-  padding: 0.3rem;
-  margin: 0.3rem;
+  padding: 0.2rem;
+  margin: 0.2rem;
   display: flex;
   align-items: center;
   &:hover,
@@ -79,26 +110,21 @@ const IconButton = styled(Button)`
 
 const Wrapper = styled.article``;
 
-const Title = styled.h2`
-  font-size: 2rem;
-  text-align: center;
-  margin: 0;
-`;
-
 const Counter = styled.p`
   text-align: center;
   align-items: center;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   color: #e1d8f0;
+  margin: 0;
   display: flex;
   justify-content: space-between;
 `;
 
 const StyledProgress = styled.progress`
-  width: 100%;
+  width: 90%;
   height: 1rem;
   border-radius: 3px;
-  margin: 1rem 0;
+  margin: 1rem auto;
   &::-webkit-progress-bar {
     background: #a5e5be;
     border-radius: 3px;

@@ -1,29 +1,32 @@
 import styled from "styled-components";
 import Button from "../components/UI/Button";
+import KTimers from "../components/Kalos/KTimers";
+import KDescription from "../components/Kalos/KDescription";
+import { kalosPhaseDescriptions } from "../data/kalos/phase-description";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { startTimers, stopTimers } from "../store/timer-slice";
-import Timers from "../components/Kalos/Timers";
+import { phaseUp } from "../store/kalos-slice";
 
 export default function KalosPage() {
-  const { isRunning } = useAppSelector((state) => state.timer);
+  const { phase: currentPhase } = useAppSelector((state) => state.kalos);
   const dispatch = useAppDispatch();
 
-  function handleStopTimers() {
-    dispatch(stopTimers());
-  }
+  const index = kalosPhaseDescriptions.findIndex(
+    (desc) => desc.phase === currentPhase
+  );
 
-  function handleStartTimers() {
-    dispatch(startTimers());
+  const { phase, ...otherProps } = kalosPhaseDescriptions[index];
+
+  function handlePhaseUp() {
+    dispatch(phaseUp());
   }
 
   return (
     <Container>
       <Title>Kalos time manager</Title>
-      <Button onClick={isRunning ? handleStopTimers : handleStartTimers}>
-        {isRunning ? "Stop all timers" : "Start all timers"}
-      </Button>
+      <Button onClick={handlePhaseUp}>Phase Up</Button>
+      <KDescription key={phase} {...otherProps} />
       <Wrapper>
-        <Timers />
+        <KTimers />
       </Wrapper>
     </Container>
   );
@@ -34,7 +37,7 @@ const Container = styled.main`
   max-width: 60rem;
   margin: 2rem auto;
   border-radius: 8px;
-  color: white;
+  color: #e1d8f0;
 `;
 
 const Title = styled.h2`
@@ -48,5 +51,5 @@ const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin: 3rem 0;
+  margin: 0.5rem;
 `;

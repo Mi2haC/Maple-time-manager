@@ -1,23 +1,29 @@
 import styled from "styled-components";
 import { useAppSelector } from "../../store/hooks";
-import Timer from "./Timer";
+import Timer from "../Timer/Timer";
+import { kalosTimerNames } from "../../data/kalos/timer-names";
 
-export default function Timers() {
+export default function KTimers() {
   const { timers } = useAppSelector((state) => state.timer);
+
   return (
     <StyledUL>
-      {timers.map((timer) => (
-        <StyledLI key={timer.name}>
-          <Timer {...timer} />
-        </StyledLI>
-      ))}
+      {timers.map((timer) => {
+        if (kalosTimerNames.includes(timer.name)) {
+          return (
+            <StyledLI key={timer.name}>
+              <Timer {...timer} />
+            </StyledLI>
+          );
+        }
+      })}
     </StyledUL>
   );
 }
 
 const StyledUL = styled.ul`
   list-style: none;
-  max-width: 40rem;
+  max-width: 60rem;
   margin: 2rem auto;
   padding: 0;
   font-family: "Handjet", sans-serif;

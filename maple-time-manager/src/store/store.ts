@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { timerSlice } from "./timer-slice";
+import { kalosSlice } from "./kalos-slice";
 
 export const store = configureStore({
   reducer: {
     timer: timerSlice.reducer,
+    kalos: kalosSlice.reducer,
   },
 });
 
