@@ -11,7 +11,7 @@ export default function KTimers() {
       {timers.map((timer) => {
         if (kalosTimerNames.includes(timer.name)) {
           return (
-            <StyledLI key={timer.name}>
+            <StyledLI key={timer.name} $primary={timer.name !== "gimic"}>
               <Timer {...timer} />
             </StyledLI>
           );
@@ -32,8 +32,11 @@ const StyledUL = styled.ul`
   grid-template-columns: repeat(auto-fit, minmax(8rem, 12rem));
 `;
 
-const StyledLI = styled.li`
-  background: linear-gradient(#a3a177, #8f8c5d);
+const StyledLI = styled.li<{ $primary: boolean }>`
+  background: ${(props) =>
+    props.$primary
+      ? `linear-gradient(#a3a177, #8f8c5d)`
+      : `linear-gradient(#a38a77, #8f735d)`};
   padding: 1rem;
   border-radius: 6px;
   color: #e1d8f0;

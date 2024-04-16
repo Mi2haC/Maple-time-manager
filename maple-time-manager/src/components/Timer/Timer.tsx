@@ -9,10 +9,19 @@ import { BiCaretLeft, BiCaretRight } from "react-icons/bi";
 import Button from "../UI/Button";
 import { useAppDispatch } from "../../store/hooks";
 
-export default function Timer({ name, duration, isRunning }: TimerProps) {
+export default function Timer({
+  name,
+  duration,
+  isRunning,
+  isResetOnStop,
+}: TimerProps) {
   const [remainingTime, setRemainingTime] = useState(duration * 1000);
   const interval = useRef<number | null>(null);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    setRemainingTime(duration * 1000);
+  }, [duration]);
 
   // if (remainingTime <= 0 && interval.current) {
   //   clearInterval(interval.current);
@@ -32,6 +41,9 @@ export default function Timer({ name, duration, isRunning }: TimerProps) {
       interval.current = timer;
     } else if (interval.current) {
       clearInterval(interval.current);
+      if (isResetOnStop) {
+        setRemainingTime(duration * 1000);
+      }
     }
 
     return () => {
@@ -49,9 +61,8 @@ export default function Timer({ name, duration, isRunning }: TimerProps) {
     setRemainingTime((prevTime) => Math.min(prevTime + 1000, duration * 1000));
   }
 
-  function handleResetStopTime() {
+  function handleStopTime() {
     dispatch(stopTimer(name));
-    setRemainingTime(duration * 1000);
   }
 
   function handleStartTime() {
@@ -62,7 +73,7 @@ export default function Timer({ name, duration, isRunning }: TimerProps) {
     <Wrapper>
       <TitleButton
         textOnly
-        onClick={isRunning ? handleResetStopTime : handleStartTime}
+        onClick={isRunning ? handleStopTime : handleStartTime}
       >
         {name}
       </TitleButton>

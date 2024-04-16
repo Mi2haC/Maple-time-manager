@@ -1,10 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { defaultTimers } from "../data/default-timers";
+import { defaultTimers } from "../data/share/default-timers";
 
 export type Timer = {
   name: string;
   duration: number;
   isRunning: boolean;
+  isResetOnStop: boolean;
 };
 
 type TimersState = {
@@ -31,7 +32,17 @@ export const timerSlice = createSlice({
       );
       if (index !== -1) state.timers[index].isRunning = false;
     },
+    changeTimerDuration(
+      state,
+      action: PayloadAction<{ name: string; duration: number }>
+    ) {
+      const index = state.timers.findIndex(
+        (timer) => timer.name === action.payload.name
+      );
+      if (index !== -1) state.timers[index].duration = action.payload.duration;
+    },
   },
 });
 
-export const { startTimer, stopTimer } = timerSlice.actions;
+export const { startTimer, stopTimer, changeTimerDuration } =
+  timerSlice.actions;

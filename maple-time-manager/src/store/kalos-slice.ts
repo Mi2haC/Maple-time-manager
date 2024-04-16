@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-type KalosState = {
+export type KalosState = {
   phase: number;
 };
 

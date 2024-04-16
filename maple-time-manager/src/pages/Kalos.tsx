@@ -5,26 +5,33 @@ import KDescription from "../components/Kalos/KDescription";
 import { kalosPhaseDescriptions } from "../data/kalos/phase-description";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { phaseUp } from "../store/kalos-slice";
+import { useKTimers } from "../hooks/useKTimers";
+import { useEffect } from "react";
 
 export default function KalosPage() {
   const { phase: currentPhase } = useAppSelector((state) => state.kalos);
   const dispatch = useAppDispatch();
+  const ktimer = useKTimers();
 
   const index = kalosPhaseDescriptions.findIndex(
     (desc) => desc.phase === currentPhase
   );
 
-  const { phase, ...otherProps } = kalosPhaseDescriptions[index];
+  const { phase, time, ...otherProps } = kalosPhaseDescriptions[index];
 
   function handlePhaseUp() {
     dispatch(phaseUp());
   }
 
+  useEffect(() => {
+    ktimer(time, phase);
+  }, [time, phase]);
+
   return (
     <Container>
       <Title>Kalos time manager</Title>
       <Button onClick={handlePhaseUp}>Phase Up</Button>
-      <KDescription key={phase} {...otherProps} />
+      <KDescription key={phase} time={time} {...otherProps} />
       <Wrapper>
         <KTimers />
       </Wrapper>
