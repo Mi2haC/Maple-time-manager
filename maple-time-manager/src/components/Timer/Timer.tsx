@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { BiCaretLeft, BiCaretRight } from "react-icons/bi";
 import Button from "../UI/Button";
 import { useAppDispatch } from "../../store/hooks";
+import { playKAudio } from "../../util/playKAudio";
 
 export default function Timer({
   name,
@@ -29,9 +30,16 @@ export default function Timer({
 
   useEffect(() => {
     let timer: number;
+    let isPlayed = false;
     if (isRunning) {
       timer = setInterval(function () {
         setRemainingTime((prevTime) => {
+          if (prevTime > 3 * 1000) {
+            isPlayed = false;
+          } else if (!isPlayed) {
+            playKAudio(name);
+            isPlayed = true;
+          }
           if (prevTime <= 0) {
             return duration * 1000;
           }
@@ -49,7 +57,7 @@ export default function Timer({
     return () => {
       clearInterval(timer);
     };
-  }, [isRunning, duration]);
+  }, [isRunning, duration, isResetOnStop, name]);
 
   const formattedRemainingTime = (remainingTime / 1000).toFixed(2);
 
