@@ -20,8 +20,6 @@ export default function HomePage() {
 
 const Container = styled.main`
   width: 80%;
-  min-width: 40rem;
-  max-width: 60rem;
   margin: 2rem auto;
   color: white;
 `;

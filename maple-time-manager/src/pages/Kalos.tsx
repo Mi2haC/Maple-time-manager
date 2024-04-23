@@ -55,8 +55,5 @@ const Title = styled.h2`
 `;
 
 const Wrapper = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
   margin: 0.5rem;
 `;

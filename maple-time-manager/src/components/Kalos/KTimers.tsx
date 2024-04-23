@@ -23,13 +23,12 @@ export default function KTimers() {
 
 const StyledUL = styled.ul`
   list-style: none;
-  max-width: 60rem;
   margin: 2rem auto;
   padding: 0;
   font-family: "Handjet", sans-serif;
   display: grid;
   gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(8rem, 12rem));
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
 `;
 
 const StyledLI = styled.li<{ $primary: boolean }>`

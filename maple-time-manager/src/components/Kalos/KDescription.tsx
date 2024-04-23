@@ -29,13 +29,13 @@ export default function KDescription({ description, time }: KDescriptionProps) {
   return (
     <Description>
       <p>Waiting for next phase : {formattedWaitingTime}</p>
-      {description}
+      <p>{description}</p>
     </Description>
   );
 }
 
 const Description = styled.div`
-  height: 7rem;
+  height: auto;
   margin: 1rem 0 0 0;
   padding: 0.5rem;
   border-style: solid;

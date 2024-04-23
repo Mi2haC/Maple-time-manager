@@ -49,12 +49,13 @@ const Header = styled.header`
   }
   h1 {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: #cebfe7;
     margin-left: 2rem;
     margin-right: auto;
   }
   nav ul {
+    margin-left: 0.5rem;
     display: flex;
     gap: 1.5rem;
     align-items: center;
